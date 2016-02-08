@@ -24,36 +24,91 @@ function m.GenerateWorkspace(wks)
 
     p.x('"workspace": "%s",', wks.name)
 
-    m.GenerateProjects(wks)
+    m.AddProjects(wks)
 
     p.pop()
     p.w('}')
 end
 
-function m.GenerateProjects(wks)
+function m.AddProjects(wks)
     p.x('"projects": [')
     p.push()
 
     local count = #wks.projects
     for i = 1, count do
-        m.GenerateProject(wks.projects[i], i < count)
+        m.AddProject(wks.projects[i], i < count)
     end
 
     p.pop()
     p.w(']')
 end
 
-function m.GenerateProject(prj, comma)
+function m.AddProject(prj, comma)
     p.w('{')
     p.push()
 
-    p.x('"name": "%s"', prj.name)
+    p.x('"name": "%s",', prj.name)
+
+    m.AddFiles(prj)
 
     p.pop()
-    p.x('}%s', addComma(comma))
+    p.x('}%s', AddComma(comma))
 end
 
-function addComma(condition)
+function m.AddFiles(prj)
+    p.x('"files": [')
+    p.push()
+
+    local files = m.GatherFiles(prj)
+    local count = #files
+    for i = 1, count do
+        p.x('"%s"%s', files[i], AddComma(i < count))
+    end
+
+    p.pop()
+    p.w(']')
+end
+
+function m.GatherFiles(prj)
+    local files = {}
+
+    local sourceTree = p.project.getsourcetree(prj, function(lhs, rhs)
+        local istop = (lhs.parent.parent == nil)
+
+        local lhsName = lhs.name
+        local rhsName = rhs.name
+
+        if lhs.relpath then
+            if not rhs.relpath then
+                return not istop
+            end
+            lhsName = lhs.relpath:gsub("%.%.%/", "")
+        end
+
+        if rhs.relpath then
+            if not lhs.relpath then
+                return istop
+            end
+            rhsName = rhs.relpath:gsub("%.%.%/", "")
+        end
+
+        return lhsName < rhsName
+    end)
+
+    p.tree.traverse(sourceTree, {
+        onleaf = function(node)
+            local file = node.relpath
+
+            if path.iscppfile(file) then
+                table.insert(files, file)
+            end
+        end
+    }, false)
+
+    return files
+end
+
+function AddComma(condition)
     if condition then
         return ','
     else
