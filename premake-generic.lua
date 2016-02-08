@@ -14,7 +14,11 @@ newaction {
     end,
 
     onWorkspace = function(wks)
-        p.generate(wks, ".json", m.GenerateWorkspace)
+        p.generate(wks, ".sln.json", m.GenerateWorkspace)
+    end,
+
+    onProject = function(prj)
+        p.generate(prj, ".prj.json", m.GenerateProject)
     end
 }
 
@@ -30,13 +34,17 @@ function m.GenerateWorkspace(wks)
     p.w('}')
 end
 
+function m.GenerateProject(prj)
+    m.AddProject(prj)
+end
+
 function m.AddProjects(wks)
     p.x('"projects": [')
     p.push()
 
     local count = #wks.projects
     for i, prj in ipairs(wks.projects) do
-        m.AddProject(prj, i < count)
+        p.x('"%s"%s', string.format("%s.prj.json", prj.name), AddComma(i < count))
     end
 
     p.pop()
