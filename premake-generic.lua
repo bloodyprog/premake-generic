@@ -22,7 +22,7 @@ function m.GenerateWorkspace(wks)
     p.w('{')
     p.push()
 
-    p.x('"workspace": "%s",', wks.name)
+    p.x('"solution": "%s",', wks.name)
 
     m.AddProjects(wks)
 
@@ -35,8 +35,8 @@ function m.AddProjects(wks)
     p.push()
 
     local count = #wks.projects
-    for i = 1, count do
-        m.AddProject(wks.projects[i], i < count)
+    for i, prj in ipairs(wks.projects) do
+        m.AddProject(prj, i < count)
     end
 
     p.pop()
@@ -49,10 +49,74 @@ function m.AddProject(prj, comma)
 
     p.x('"name": "%s",', prj.name)
 
+    m.AddConfigs(prj)
     m.AddFiles(prj)
 
     p.pop()
     p.x('}%s', AddComma(comma))
+end
+
+function m.AddConfigs(prj)
+    p.x('"configs": [')
+    p.push()
+
+    local configs = m.GatherConfigs(prj)
+    local count = #configs
+    for i, cfg in ipairs(configs) do
+        m.AddConfig(prj, cfg, i < count)
+    end
+
+    p.pop()
+    p.w('],')
+end
+
+function m.AddConfig(prj, cfg, comma)
+    p.w('{')
+    p.push()
+
+    p.x('"name": "%s",', cfg.name)
+
+    m.AddDefines(cfg)
+    m.AddIncludeDirectories(prj, cfg)
+
+    p.pop()
+    p.x('}%s', AddComma(comma))
+end
+
+function m.AddDefines(cfg)
+    p.w('"defines": [')
+    p.push()
+
+    local count = #cfg.defines
+    for i, define in ipairs(cfg.defines) do
+        p.x('"%s"%s', define, AddComma(i < count))
+    end
+
+    p.pop()
+    p.w('],')
+end
+
+function m.AddIncludeDirectories(prj, cfg)
+    p.w('"includedirs": [')
+    p.push()
+
+    local count = #cfg.includedirs
+    for i, include in ipairs(cfg.includedirs) do
+        p.x('"%s"%s', p.project.getrelative(prj, include), AddComma(i < count))
+    end
+
+    p.pop()
+    p.w(']')
+end
+
+function m.GatherConfigs(prj)
+    local configs = {}
+
+    for cfg in p.project.eachconfig(prj) do
+        table.insert(configs, cfg)
+    end
+
+    return configs
 end
 
 function m.AddFiles(prj)
@@ -61,8 +125,8 @@ function m.AddFiles(prj)
 
     local files = m.GatherFiles(prj)
     local count = #files
-    for i = 1, count do
-        p.x('"%s"%s', files[i], AddComma(i < count))
+    for i, file in ipairs(files) do
+        p.x('"%s"%s', file, AddComma(i < count))
     end
 
     p.pop()
@@ -110,9 +174,9 @@ end
 
 function AddComma(condition)
     if condition then
-        return ','
+        return ","
     else
-        return ''
+        return ""
     end
 end
 
