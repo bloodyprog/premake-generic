@@ -5,6 +5,8 @@ premake.modules.generic = {}
 local m = premake.modules.generic
 local p = premake
 
+local splitProjects = true
+
 newaction {
     trigger = "generic",
     description = "Generate a Generic project.",
@@ -18,7 +20,9 @@ newaction {
     end,
 
     onProject = function(prj)
-        p.generate(prj, ".prj.json", m.GenerateProject)
+        if splitProjects then
+            p.generate(prj, ".prj.json", m.GenerateProject)
+        end
     end
 }
 
@@ -44,7 +48,11 @@ function m.AddProjects(wks)
 
     local count = #wks.projects
     for i, prj in ipairs(wks.projects) do
-        p.x('"%s"%s', string.format("%s.prj.json", prj.name), AddComma(i < count))
+        if splitProjects then
+            p.x('"%s"%s', string.format("%s.prj.json", prj.name), AddComma(i < count))
+        else
+            m.AddProject(prj, i < count)
+        end
     end
 
     p.pop()
@@ -55,7 +63,7 @@ function m.AddProject(prj, comma)
     p.w('{')
     p.push()
 
-    p.x('"name": "%s",', prj.name)
+    p.x('"project": "%s",', prj.name)
 
     m.AddConfigs(prj)
     m.AddFiles(prj)
@@ -86,6 +94,7 @@ function m.AddConfig(prj, cfg, comma)
 
     m.AddDefines(cfg)
     m.AddIncludeDirectories(prj, cfg)
+    m.AddPrecompiledHeader(cfg)
 
     p.pop()
     p.x('}%s', AddComma(comma))
@@ -114,7 +123,11 @@ function m.AddIncludeDirectories(prj, cfg)
     end
 
     p.pop()
-    p.w(']')
+    p.w('],')
+end
+
+function m.AddPrecompiledHeader(cfg)
+    p.x('"pchsource": "%s"', cfg.pchsource or "null")
 end
 
 function m.GatherConfigs(prj)
