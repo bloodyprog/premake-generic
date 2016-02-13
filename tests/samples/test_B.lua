@@ -1,5 +1,5 @@
 
-require( "../premake-generic" )
+require( "../../src/premake-generic" )
 
 solution( "test_B" )
     configurations( { "Debug" } )
