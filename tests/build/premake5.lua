@@ -32,8 +32,9 @@ project( "Tests" )
         flags { "ExtraWarnings", "FatalWarnings", "Optimize" }
 
     configuration { "gmake" }
-        postbuildcommands { "$(TARGET) ../../samples/generic" }
         buildoptions { "-std=c++11", "-std=c++1y" }
+        postbuildcommands { "$(TARGET) ../../samples/generic" }
 
     configuration { "vs*" }
+        buildoptions { "/wd\"4706\"" }
         postbuildcommands { "\"$(TargetPath)\" ../../samples/generic" }

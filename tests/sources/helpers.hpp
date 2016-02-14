@@ -2,6 +2,6 @@
 
 #include "externs/json.hpp"
 
-using namespace nlohmann;
+void ChangeCWD( int argc, char* argv[] );
 
-json ParseJsonFile( const std::string& file );
+nlohmann::json ParseJsonFile( const std::string& file );

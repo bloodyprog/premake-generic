@@ -1,3 +1,4 @@
 /tests/build/gmake
+/tests/build/vs20*
 /tests/build/output
 /tests/samples/generic

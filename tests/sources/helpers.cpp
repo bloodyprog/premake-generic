@@ -3,7 +3,29 @@
 #include <fstream>
 #include <sstream>
 
-json ParseJsonFile( const std::string& file )
+#if defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
+#endif
+
+void ChangeCWD( int argc, char* argv[] )
+{
+    if ( argc < 2 )
+        return;
+
+    char cwd[256];
+
+#ifdef _MSC_VER
+    SetCurrentDirectory(argv[1]);
+    GetCurrentDirectory(sizeof(cwd), cwd);
+#else
+    chdir(argv[1]);
+    getcwd(cwd, sizeof(cwd));
+#endif
+
+    std::cout << "{ cwd : " << cwd << " }" << std::endl;
+}
+
+nlohmann::json ParseJsonFile( const std::string& file )
 {
     std::ifstream f( file );
 
@@ -12,7 +34,7 @@ json ParseJsonFile( const std::string& file )
         std::stringstream ss;
         ss << f.rdbuf();
 
-        return json::parse( ss.str() );
+        return nlohmann::json::parse( ss.str() );
     }
 
     return nullptr;
