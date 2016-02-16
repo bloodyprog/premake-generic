@@ -1,13 +1,16 @@
 #include "externs/catch.hpp"
 #include "helpers.hpp"
 
-void ValidateStructure( nlohmann::json& object )
+namespace
 {
-    CHECK( object.is_object() );
-    CHECK( object.size() == 2 );
+    void ValidateStructure( nlohmann::json& object )
+    {
+        CHECK( object.is_object() );
+        CHECK( object.size() == 2 );
 
-    CHECK( object["solution"].is_string() );
-    CHECK( object["projects"].is_array() );
+        CHECK( object["solution"].is_string() );
+        CHECK( object["projects"].is_array() );
+    }
 }
 
 TEST_CASE( "Solution structure" )
