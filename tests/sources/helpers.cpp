@@ -6,7 +6,6 @@
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #else
-#include <dirent.h>
 #include <unistd.h>
 #endif
 
@@ -37,33 +36,9 @@ void ChangeCWD( int argc, char* argv[] )
     if ( argc < 2 )
         return;
 
-    std::cout << "{ old_cwd : " << GetCWD() << " }" << std::endl;
-
     SetCWD(argv[1]);
 
-    std::cout << "{ new_cwd : " << GetCWD() << " }" << std::endl;
-}
-
-void PrintFilesInCWD()
-{
-#ifndef _MSC_VER
-    std::vector<std::string> files;
-
-    auto dp = opendir(GetCWD().c_str());
-
-    if (dp != nullptr)
-    {
-        while (auto dirp = readdir(dp))
-        {
-            files.push_back(dirp->d_name);
-        }
-    }
-
-    for (auto& file : files)
-    {
-        std::cout << "> " << file << std::endl;
-    }
-#endif
+    std::cout << "{ cwd : " << GetCWD() << " }" << std::endl;
 }
 
 nlohmann::json ParseJsonFile( const std::string& file )

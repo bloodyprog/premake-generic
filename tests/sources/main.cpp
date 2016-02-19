@@ -5,7 +5,6 @@
 int main( int argc, char* argv[] )
 {
     ChangeCWD( argc, argv );
-    PrintFilesInCWD();
 
     return Catch::Session().run();
 }
