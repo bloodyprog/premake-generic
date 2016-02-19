@@ -38,6 +38,10 @@ nlohmann::json ParseJsonFile( const std::string& file )
 
         return nlohmann::json::parse( ss.str() );
     }
+    else
+    {
+        throw std::invalid_argument(file);
+    }
 
     return nullptr;
 }
