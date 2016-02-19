@@ -25,6 +25,10 @@ matrix:
                 sources: [ 'ubuntu-toolchain-r-test', 'llvm-toolchain-precise-3.7' ]
                 packages: [ 'clang-3.7' ]
 
+before_install:
+    - chmod +x tests/build/buildtools-premake/bin/linux/premake5
+    - chmod +x tests/run_tests.sh
+
 before_script:
     - if [ -n "${INSTALL_CXX}" ]; then
         CXX=${INSTALL_CXX};
@@ -34,6 +38,7 @@ before_script:
         CC=${INSTALL_CC};
         $CC --version;
       fi
+    - tests/build/buildtools-premake/bin/premake.sh --version
 
 script:
     - tests/run_tests.sh

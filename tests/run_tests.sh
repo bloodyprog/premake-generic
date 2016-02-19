@@ -10,9 +10,15 @@ do
 done
 
 $premake gmake --file=build/premake5.lua --verbose
+r=$?
 
-pushd build/gmake > /dev/null
-make
+if [[ $r -eq 0 ]]; then
+    cd build/gmake
+
+    make
+    r=$?
+fi
+
 popd > /dev/null
 
-popd > /dev/null
+exit $r
