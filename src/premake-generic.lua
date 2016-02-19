@@ -1,15 +1,15 @@
--- generic
+-- probe
 
-premake.modules.generic = {}
+premake.modules.probe = {}
 
-local m = premake.modules.generic
+local m = premake.modules.probe
 local p = premake
 
 local splitProjects = true
 
 newaction {
-    trigger = "generic",
-    description = "Generate a Generic project.",
+    trigger = "probe",
+    description = "Generate a Probe project.",
 
     onStart = function()
         p.indent('  ')

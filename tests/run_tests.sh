@@ -6,7 +6,7 @@ premake=build/buildtools-premake/bin/premake.sh
 
 for f in samples/*.lua
 do
-    $premake generic --file=$f
+    $premake probe --file=$f
 done
 
 $premake gmake --file=build/premake5.lua --verbose

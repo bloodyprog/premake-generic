@@ -1,7 +1,7 @@
 @echo off
 
 for %%f in (samples\*.lua) do (
-    build\premake5 generic --file=%%f
+    build\premake5 probe --file=%%f
 )
 
 build\premake5 vs2015 --file=build\premake5.lua
