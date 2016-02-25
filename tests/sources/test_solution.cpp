@@ -6,7 +6,7 @@ namespace
     void ValidateStructure( nlohmann::json& object )
     {
         CHECK( object.is_object() );
-        CHECK( object.size() == 2 );
+        CHECK(object.size() == 2);
 
         CHECK( object["solution"].is_string() );
         CHECK( object["projects"].is_array() );
@@ -41,8 +41,8 @@ TEST_CASE( "Solution with a single project" )
     auto& projects = test_B["projects"];
 
     CHECK( solution == "test_B" );
-    CHECK( projects.size() == 1 );
 
+    REQUIRE( projects.size() == 1 );
     CHECK( projects[0].is_string() );
     CHECK( projects[0] == "test_B1.prj.json" );
 }
@@ -54,7 +54,8 @@ TEST_CASE( "Solution with many projects" )
     auto& projects = test_C["projects"];
 
     CHECK( solution == "test_C" );
-    CHECK( projects.size() == 3 );
+
+    REQUIRE( projects.size() == 3 );
 
     CHECK( projects[0].is_string() );
     CHECK( projects[0] == "test_C1.prj.json" );

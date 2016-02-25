@@ -132,7 +132,7 @@ function m.AddIncludeDirectories(prj, cfg)
 end
 
 function m.AddPrecompiledHeader(cfg)
-    p.x('"pchsource": "%s"', cfg.pchsource or "null")
+    p.x('"pchsource": %s', AddQuotedOrNil(cfg.pchsource))
 end
 
 function m.GatherConfigs(prj)
@@ -203,6 +203,14 @@ function AddComma(condition)
         return ","
     else
         return ""
+    end
+end
+
+function AddQuotedOrNil(value)
+    if value then
+        return '"' .. value '"'
+    else
+        return "null"
     end
 end
 
