@@ -1,7 +1,5 @@
 language: cpp
 
-sudo: false
-
 notifications:
     email:
         on_success: change
