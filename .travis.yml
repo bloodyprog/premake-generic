@@ -9,6 +9,7 @@ matrix:
     include:
         - os: linux
           compiler: clang
+          env: INSTALL_CXX=clang++-3.7
           addons:
             apt:
                 sources: [ 'ubuntu-toolchain-r-test', 'llvm-toolchain-precise-3.7' ]
@@ -21,6 +22,10 @@ before_install:
     - chmod +x tests/run_tests.sh
 
 before_script:
+    - if [ -n "${INSTALL_CXX}" ]; then
+        CXX=${INSTALL_CXX};
+        $CXX --version;
+      fi
     - clang --version
     - tests/build/buildtools-premake/bin/build.sh
     - tests/build/buildtools-premake/bin/premake.sh --version
