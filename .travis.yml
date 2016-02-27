@@ -10,14 +10,6 @@ notifications:
 matrix:
     include:
         - os: linux
-          compiler: gcc
-          env: INSTALL_CXX=g++-4.9 INSTALL_CC=gcc-4.9
-          addons:
-            apt:
-                sources: [ 'ubuntu-toolchain-r-test' ]
-                packages: [ 'g++-4.9', 'gcc-4.9', 'libc6' ]
-
-        - os: linux
           compiler: clang
           env: INSTALL_CXX=clang-3.7
           addons:
@@ -26,6 +18,7 @@ matrix:
                 packages: [ 'clang-3.7', 'libc6' ]
 
         - os: osx
+          compiler: clang
 
 before_install:
     - chmod +x tests/build/buildtools-premake/bin/linux/premake5
@@ -40,10 +33,7 @@ before_script:
         CC=${INSTALL_CC};
         $CC --version;
       fi
-    - cd /lib
-      ls
-      cd /lib/x86_64-linux-gnu/
-      ls
+    - cd /lib; ls; cd /lib/x86_64-linux-gnu/; ls
     - tests/build/buildtools-premake/bin/premake.sh --version
 
 script:
