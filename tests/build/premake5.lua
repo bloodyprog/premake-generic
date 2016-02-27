@@ -1,5 +1,5 @@
 
-solution( "Tests" )
+workspace( "Tests" )
 
     configurations( { "Debug", "Release" } )
         location( _ACTION )

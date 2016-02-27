@@ -1,7 +1,7 @@
 
 require( "../../src/premake-generic" )
 
-solution( "test_B" )
+workspace( "test_B" )
     configurations( { "Debug" } )
         location( _ACTION )
 

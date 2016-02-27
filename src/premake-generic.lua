@@ -17,11 +17,11 @@ newaction {
 
     -- compatibility for v5.0.0.alpha4
     onSolution = function(wks)
-        p.generate(wks, ".sln.json", m.GenerateWorkspace)
+        p.generate(wks, ".wks.json", m.GenerateWorkspace)
     end,
 
     onWorkspace = function(wks)
-        p.generate(wks, ".sln.json", m.GenerateWorkspace)
+        p.generate(wks, ".wks.json", m.GenerateWorkspace)
     end,
 
     onProject = function(prj)
@@ -35,7 +35,7 @@ function m.GenerateWorkspace(wks)
     p.w('{')
     p.push()
 
-    p.x('"solution": "%s",', wks.name)
+    p.x('"workspace": "%s",', wks.name)
 
     m.AddProjects(wks)
 
