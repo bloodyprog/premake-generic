@@ -1,7 +1,5 @@
 language: cpp
 
-sudo: false
-
 notifications:
     email:
         on_success: change
@@ -11,20 +9,20 @@ matrix:
     include:
         - os: linux
           compiler: clang
-          addons:
-            apt:
-                sources: [ 'ubuntu-toolchain-r-test', 'llvm-toolchain-precise-3.7' ]
-                packages: [ 'libc6-2.16' ]
+          before_install:
+              - sudo apt-get -qq update
+              - sudo apt-get install -y libc6=2.16
+          before_script: cd /lib/x86_64-linux-gnu/; ls -l libc*.so*
 
         - os: osx
           compiler: clang
+          before_script: clang --version
 
 before_install:
     - chmod +x tests/build/buildtools-premake/bin/linux/premake5
     - chmod +x tests/run_tests.sh
 
 before_script:
-    - cd /lib/x86_64-linux-gnu/; ls -l libc*.so*
     - tests/build/buildtools-premake/bin/premake.sh --version
 
 script:
