@@ -1,21 +1,39 @@
 language: cpp
 
+sudo: false
+
 notifications:
     email:
         on_success: change
         on_failure: always
 
-os:
-    - linux
-    - osx
+matrix:
+    include:
+        - os: linux
+          compiler: clang
+          env: INSTALL_CXX=clang-3.7
+          addons:
+            apt:
+                sources: [ 'ubuntu-toolchain-r-test', 'llvm-toolchain-precise-3.7' ]
+                packages: [ 'clang-3.7', 'libc6' ]
+
+        - os: osx
+          compiler: clang
 
 before_install:
-    - sudo apt-get -qq update
-    - sudo apt-get install -y libc6
     - chmod +x tests/build/buildtools-premake/bin/linux/premake5
     - chmod +x tests/run_tests.sh
 
 before_script:
+    - if [ -n "${INSTALL_CXX}" ]; then
+        CXX=${INSTALL_CXX};
+        $CXX --version;
+      fi
+    - if [ -n "${INSTALL_CC}" ]; then
+        CC=${INSTALL_CC};
+        $CC --version;
+      fi
+    - cd /lib; ls ;cd /lib/x86_64-linux-gnu/; ls
     - tests/build/buildtools-premake/bin/premake.sh --version
 
 script:
