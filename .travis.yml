@@ -12,6 +12,8 @@ os:
     - osx
 
 before_install:
+    - sudo apt-get -qq update
+    - sudo apt-get install -y libc6
     - chmod +x tests/build/buildtools-premake/bin/linux/premake5
     - chmod +x tests/run_tests.sh
 
