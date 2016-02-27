@@ -9,6 +9,10 @@ matrix:
     include:
         - os: linux
           compiler: clang
+          addons:
+            apt:
+                sources: [ 'ubuntu-toolchain-r-test', 'llvm-toolchain-precise-3.7' ]
+                packages: [ 'clang-3.7', 'libc6-2.16' ]
 
         - os: osx
           compiler: clang
@@ -18,6 +22,7 @@ before_install:
 
 before_script:
     - clang --version
+    - tests/build/buildtools-premake/bin/build.sh
     - tests/build/buildtools-premake/bin/premake.sh --version
 
 script:
