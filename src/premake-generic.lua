@@ -15,11 +15,6 @@ newaction {
         p.indent('  ')
     end,
 
-    -- compatibility for v5.0.0.alpha4
-    onSolution = function(wks)
-        p.generate(wks, ".wks.json", m.GenerateWorkspace)
-    end,
-
     onWorkspace = function(wks)
         p.generate(wks, ".wks.json", m.GenerateWorkspace)
     end,
