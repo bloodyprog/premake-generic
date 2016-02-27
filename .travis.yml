@@ -33,7 +33,7 @@ before_script:
         CC=${INSTALL_CC};
         $CC --version;
       fi
-    - ccd /lib/x86_64-linux-gnu/; ls -l libc*.so*
+    - cd /lib/x86_64-linux-gnu/; ls -l libc*.so*
     - tests/build/buildtools-premake/bin/premake.sh --version
 
 script:
