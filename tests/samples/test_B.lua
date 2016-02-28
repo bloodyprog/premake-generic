@@ -1,5 +1,5 @@
 
-require( "../../src/premake-generic" )
+require( "../../src/blueprint" )
 
 workspace( "test_B" )
     configurations( { "Debug" } )
