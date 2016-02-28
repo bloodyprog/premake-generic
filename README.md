@@ -1,4 +1,4 @@
-# probe-premake
-Premake action to generate a Probe project.
+# blueprint-premake
+Premake action to generate a Blueprint project.
 
-[![Build Status](https://travis-ci.org/eparayre/probe-premake.svg)](https://travis-ci.org/eparayre/probe-premake)
+[![Build Status](https://travis-ci.org/eparayre/blueprint-premake.svg)](https://travis-ci.org/eparayre/blueprint-premake)

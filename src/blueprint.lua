@@ -1,15 +1,15 @@
--- probe
+-- blueprint
 
-premake.modules.probe = {}
+premake.modules.blueprint = {}
 
-local m = premake.modules.probe
+local m = premake.modules.blueprint
 local p = premake
 
 local splitProjects = true
 
 newaction {
-    trigger = "probe",
-    description = "Generate a Probe project.",
+    trigger = "blueprint",
+    description = "Generate a Blueprint project.",
 
     onStart = function()
         p.indent('  ')
