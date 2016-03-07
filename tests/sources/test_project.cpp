@@ -60,18 +60,20 @@ TEST_CASE("Test B1")
     {
         auto& files = test_B1["files"];
 
-        REQUIRE(files.size() == 4);
+        REQUIRE(files.size() == 6);
 
         CHECK(files[0].is_string());
-        CHECK(files[0] == "../folder_A/sub_folder_AA/file_AA1.cpp");
-
         CHECK(files[1].is_string());
-        CHECK(files[1] == "../folder_A/sub_folder_AB/file_AB1.cpp");
-
         CHECK(files[2].is_string());
-        CHECK(files[2] == "../folder_B/file_B1.cpp");
-
         CHECK(files[3].is_string());
-        CHECK(files[3] == "../file_at_root.cpp");
+        CHECK(files[4].is_string());
+        CHECK(files[5].is_string());
+
+        CHECK(files[0] == "../folder_A/sub_folder_AA/file_AA1.c");
+        CHECK(files[1] == "../folder_A/sub_folder_AA/file_AA1.h");
+        CHECK(files[2] == "../folder_A/sub_folder_AB/file_AB1.cpp");
+        CHECK(files[3] == "../folder_B/file_B1.cpp");
+        CHECK(files[4] == "../folder_B/file_B1.hpp");
+        CHECK(files[5] == "../file_at_root.cpp");
     }
 }

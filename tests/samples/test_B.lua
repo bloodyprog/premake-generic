@@ -20,7 +20,7 @@ project( "test_B1" )
     }
 
     files {
-        "folder_A/sub_folder_AA/file_AA1.cpp",
+        "folder_A/sub_folder_AA/file_AA1.c",
         "folder_A/sub_folder_AA/file_AA1.h",
         "folder_A/sub_folder_AB/file_AB1.cpp",
         "folder_B/file_B1.cpp",

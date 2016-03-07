@@ -184,7 +184,7 @@ function m.GatherFiles(prj)
         onleaf = function(node)
             local file = node.relpath
 
-            if path.iscppfile(file) then
+            if path.iscppfile(file) or path.iscppheader(file) then
                 table.insert(files, file)
             end
         end
