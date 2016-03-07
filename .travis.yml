@@ -5,27 +5,22 @@ notifications:
         on_success: change
         on_failure: always
 
-matrix:
-    include:
-        - os: linux
-          compiler: clang
-          env: INSTALL_CXX=clang++-3.7
-          addons:
-            apt:
-                sources: [ 'ubuntu-toolchain-r-test', 'llvm-toolchain-precise-3.7' ]
-                packages: [ 'clang-3.7' ]
+os:
+    - linux
+    - osx
 
-        - os: osx
-          compiler: clang
+compiler:
+    - clang
 
-before_install:
-    - chmod +x tests/run_tests.sh
+addons:
+  apt:
+    sources: [ 'ubuntu-toolchain-r-test', 'llvm-toolchain-precise-3.7' ]
+    packages: [ 'clang-3.7' ]
 
 before_script:
-    - if [ -n "${INSTALL_CXX}" ]; then
-        CXX=${INSTALL_CXX};
-      fi
-    - clang --version
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then CXX=clang++-3.7; fi
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then $CXX --version; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then clang --version; fi
     - tests/build/buildtools-premake/bin/build.sh
     - tests/build/buildtools-premake/bin/premake.sh --version
 
