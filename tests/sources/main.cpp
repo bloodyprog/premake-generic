@@ -6,5 +6,5 @@ int main( int argc, char* argv[] )
 {
     ChangeCWD( argc, argv );
 
-    return Catch::Session().run();
+    return Catch::Session().run(argc - 1, &argv[1]);
 }

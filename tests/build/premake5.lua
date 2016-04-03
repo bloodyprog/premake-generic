@@ -18,7 +18,6 @@ project( "Tests" )
     language( "C++" )
 
     files {
-        path.join( "../sources/**.h" ),
         path.join( "../sources/**.hpp" ),
         path.join( "../sources/**.cpp" )
     }
@@ -32,7 +31,7 @@ project( "Tests" )
         flags { "ExtraWarnings", "FatalWarnings", "Optimize" }
 
     configuration { "gmake" }
-        buildoptions { "-std=c++11", "-std=c++1y" }
+        buildoptions { "-std=c++14" }
         postbuildcommands { "$(TARGET) ../../samples/blueprint" }
 
     configuration { "vs*" }
