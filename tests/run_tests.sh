@@ -2,7 +2,7 @@
 
 pushd $(dirname $0) > /dev/null
 
-premake=build/buildtools-premake/bin/premake.sh
+premake=build/dependencies/premake/premake5
 
 for f in samples/*.lua
 do
