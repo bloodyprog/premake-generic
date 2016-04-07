@@ -94,7 +94,7 @@ function m.AddConfig(prj, cfg, comma)
 
     m.AddDefines(cfg)
     m.AddIncludeDirectories(prj, cfg)
-    m.AddPrecompiledHeader(cfg)
+    m.AddPrecompiledHeader(prj, cfg)
 
     p.pop()
     p.x('}%s', AddComma(comma))
@@ -126,8 +126,8 @@ function m.AddIncludeDirectories(prj, cfg)
     p.w('],')
 end
 
-function m.AddPrecompiledHeader(cfg)
-    p.x('"pchsource": %s', AddQuotedOrNil(cfg.pchsource))
+function m.AddPrecompiledHeader(prj ,cfg)
+    p.x('"pchsource": %s', AddQuotedOrNil(p.project.getrelative(prj, cfg.pchsource)))
 end
 
 function m.GatherConfigs(prj)
@@ -203,7 +203,7 @@ end
 
 function AddQuotedOrNil(value)
     if value then
-        return '"' .. value '"'
+        return '"' .. value .. '"'
     else
         return "null"
     end

@@ -53,7 +53,8 @@ TEST_CASE("Test B1")
         CHECK(config["includedirs"][0] == "../some/include/path");
         CHECK(config["includedirs"][1] == "../some/other/include/path");
 
-        CHECK(config["pchsource"].is_null());
+        CHECK(config["pchsource"].is_string());
+        CHECK(config["pchsource"] == "../some/precompiled.cpp");
     }
 
     SECTION("Files")

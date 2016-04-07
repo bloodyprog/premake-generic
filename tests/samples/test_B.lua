@@ -19,6 +19,9 @@ project( "test_B1" )
         "some/other/include/path"
     }
 
+    pchheader("some/precompiled.hpp")
+    pchsource("some/precompiled.cpp")
+
     files {
         "folder_A/sub_folder_AA/file_AA1.c",
         "folder_A/sub_folder_AA/file_AA1.h",
