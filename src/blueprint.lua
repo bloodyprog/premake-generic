@@ -127,7 +127,8 @@ function m.AddIncludeDirectories(prj, cfg)
 end
 
 function m.AddPrecompiledHeader(prj ,cfg)
-    p.x('"pchsource": %s', AddQuotedOrNil(p.project.getrelative(prj, cfg.pchsource)))
+    p.x('"pchheader": %s,', AddQuotedOrNil(p.project.getrelative(prj, cfg.pchheader)))
+    p.x('"pchsource": %s',  AddQuotedOrNil(p.project.getrelative(prj, cfg.pchsource)))
 end
 
 function m.GatherConfigs(prj)

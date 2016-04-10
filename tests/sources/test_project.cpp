@@ -5,8 +5,8 @@ namespace
 {
     void ValidateStructure(nlohmann::json& object)
     {
-        CHECK(object.is_object());
-        CHECK(object.size() == 3);
+        REQUIRE(object.is_object());
+        REQUIRE(object.size() == 3);
 
         CHECK(object["project"].is_string());
         CHECK(object["configs"].is_array());
@@ -37,23 +37,26 @@ TEST_CASE("Test B1")
         REQUIRE(configs.size() == 1);
 
         auto& config = configs[0];
-        CHECK(config.size() == 4);
+        CHECK(config.size() == 5);
 
-        CHECK(config["name"].is_string());
+        REQUIRE(config["name"].is_string());
         CHECK(config["name"] == "Debug");
 
-        CHECK(config["defines"].is_array());
-        CHECK(config["defines"].size() == 3);
+        REQUIRE(config["defines"].is_array());
+        REQUIRE(config["defines"].size() == 3);
         CHECK(config["defines"][0] == "DEFINE_1");
         CHECK(config["defines"][1] == "DEFINE_2");
         CHECK(config["defines"][2] == "DEFINE_3");
 
-        CHECK(config["includedirs"].is_array());
-        CHECK(config["includedirs"].size() == 2);
+        REQUIRE(config["includedirs"].is_array());
+        REQUIRE(config["includedirs"].size() == 2);
         CHECK(config["includedirs"][0] == "../some/include/path");
         CHECK(config["includedirs"][1] == "../some/other/include/path");
 
-        CHECK(config["pchsource"].is_string());
+        REQUIRE(config["pchheader"].is_string());
+        CHECK(config["pchheader"] == "some/precompiled.hpp");
+
+        REQUIRE(config["pchsource"].is_string());
         CHECK(config["pchsource"] == "../some/precompiled.cpp");
     }
 
